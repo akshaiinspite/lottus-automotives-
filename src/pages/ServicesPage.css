@@ -44,19 +44,19 @@
   position: relative;
   z-index: 2;
   padding: var(--space-2xl) 0 var(--space-xl);
-  text-align: left;
+  text-align: center;
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
+  align-items: center;
   width: 100%;
 }
 
 .services-hero__content .section-label {
-  justify-content: flex-start;
+  justify-content: center;
 }
 
 .services-hero__content .section-subtext {
-  margin: 0;
+  margin: 0 auto;
 }
 
 /* ===== SERVICES SEARCH SECTION ===== */

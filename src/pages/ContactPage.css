@@ -40,19 +40,19 @@
   z-index: 2;
   padding: var(--space-2xl) 0 var(--space-xl);
   max-width: 780px;
-  text-align: left;
+  text-align: center;
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
+  align-items: center;
   width: 100%;
 }
 
 .contact-hero__content .section-label {
-  justify-content: flex-start;
+  justify-content: center;
 }
 
 .contact-hero__content .section-subtext {
-  margin: 0;
+  margin: 0 auto;
 }
 
 /* ===== CONTACT SECTION ===== */
