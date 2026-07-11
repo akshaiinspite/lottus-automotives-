@@ -43,19 +43,20 @@
 .services-hero__content {
   position: relative;
   z-index: 2;
-  padding: var(--space-xl) 0;
-  text-align: center;
+  padding: var(--space-2xl) 0 var(--space-xl);
+  text-align: left;
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: flex-start;
+  width: 100%;
 }
 
 .services-hero__content .section-label {
-  justify-content: center;
+  justify-content: flex-start;
 }
 
 .services-hero__content .section-subtext {
-  margin: 0 auto;
+  margin: 0;
 }
 
 /* ===== SERVICES SEARCH SECTION ===== */

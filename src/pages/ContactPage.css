@@ -38,20 +38,21 @@
 .contact-hero__content {
   position: relative;
   z-index: 2;
-  padding: var(--space-xl) 0;
-  max-width: 650px;
-  text-align: center;
+  padding: var(--space-2xl) 0 var(--space-xl);
+  max-width: 780px;
+  text-align: left;
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: flex-start;
+  width: 100%;
 }
 
 .contact-hero__content .section-label {
-  justify-content: center;
+  justify-content: flex-start;
 }
 
 .contact-hero__content .section-subtext {
-  margin: 0 auto;
+  margin: 0;
 }
 
 /* ===== CONTACT SECTION ===== */

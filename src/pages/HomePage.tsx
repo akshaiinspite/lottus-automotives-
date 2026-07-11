@@ -1,7 +1,8 @@
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef } from 'react'
 import { Link } from 'react-router-dom'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
+import HeroCanvas from '../components/HeroCanvas'
 import './HomePage.css'
 
 gsap.registerPlugin(ScrollTrigger)
@@ -49,14 +50,13 @@ const HeroSection = () => {
             </div>
           </div>
           <div className="hero__image-col">
-            <div className="hero__car-frame">
-              <img
-                src="/hero_car_display.png"
-                alt="Luxury sports car Porsche 911"
-                className="hero__car-img"
-                loading="eager"
-              />
-            </div>
+            <HeroCanvas
+              images={[
+                '/hero_car_display.png',
+                '/hero_car_display_2.png',
+                '/hero_car_display_3.png'
+              ]}
+            />
           </div>
         </div>
       </div>
