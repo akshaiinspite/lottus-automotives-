@@ -109,17 +109,23 @@ const HeroCanvas = ({ images }: HeroCanvasProps) => {
       uniform sampler2D texture2;
       uniform float progress;
       uniform float time;
+      uniform vec2 scale;
       
       void main() {
-        vec2 uv = vUv;
+        // Apply object-fit cover texture scaling
+        vec2 uv = (vUv - 0.5) * scale + 0.5;
         
         // Liquid wave wave-distortion equations
-        float wave = sin(uv.y * 12.0 + time * 1.5) * 0.035;
-        float wave2 = cos(uv.x * 12.0 - time * 1.5) * 0.035;
+        float wave = sin(uv.y * 10.0 + time * 1.5) * 0.03;
+        float wave2 = cos(uv.x * 10.0 - time * 1.5) * 0.03;
         
         // Distort UV coordinates based on transition progress
         vec2 distortedUv1 = vec2(uv.x + progress * wave, uv.y + progress * wave2);
         vec2 distortedUv2 = vec2(uv.x - (1.0 - progress) * wave, uv.y - (1.0 - progress) * wave2);
+        
+        // Prevent UV clamping/bleeding at edges
+        distortedUv1 = clamp(distortedUv1, 0.0, 1.0);
+        distortedUv2 = clamp(distortedUv2, 0.0, 1.0);
         
         // Liquid ripple blend
         vec4 color1 = texture2D(texture1, distortedUv1);
@@ -128,6 +134,20 @@ const HeroCanvas = ({ images }: HeroCanvasProps) => {
         gl_FragColor = mix(color1, color2, progress);
       }
     `
+
+    // Helper to calculate object-fit: cover scaling factors
+    const getScale = (w: number, h: number) => {
+      const imageAspect = 16 / 9;
+      const containerAspect = w / h;
+      let scaleX = 1;
+      let scaleY = 1;
+      if (containerAspect > imageAspect) {
+        scaleY = imageAspect / containerAspect;
+      } else {
+        scaleX = containerAspect / imageAspect;
+      }
+      return new THREE.Vector2(scaleX, scaleY);
+    }
 
     // Create a plane that fills the viewport
     const geometry = new THREE.PlaneGeometry(width, height)
@@ -138,7 +158,8 @@ const HeroCanvas = ({ images }: HeroCanvasProps) => {
         texture1: { value: textures[0] },
         texture2: { value: textures[0] },
         progress: { value: 0 },
-        time: { value: 0 }
+        time: { value: 0 },
+        scale: { value: getScale(width, height) }
       },
       transparent: true
     })
@@ -173,6 +194,10 @@ const HeroCanvas = ({ images }: HeroCanvasProps) => {
       camera.updateProjectionMatrix()
 
       renderer.setSize(width, height)
+
+      if (materialRef.current) {
+        materialRef.current.uniforms.scale.value.copy(getScale(width, height))
+      }
 
       // Recreate geometry to match new dimensions
       mesh.geometry.dispose()
