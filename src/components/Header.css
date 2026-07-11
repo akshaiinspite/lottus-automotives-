@@ -22,7 +22,7 @@
 .header__nav {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: center;
   max-width: var(--max-width-wide);
   margin: 0 auto;
   padding: 0 var(--space-md);
@@ -31,6 +31,8 @@
 
 /* Logo */
 .header__logo {
+  position: absolute;
+  left: var(--space-md);
   display: flex;
   align-items: center;
   z-index: 101;
@@ -144,6 +146,18 @@
 @media (max-width: 1024px) {
   .header__burger {
     display: flex;
+    position: relative;
+    right: 0;
+  }
+
+  .header__nav {
+    justify-content: space-between;
+    padding: 0 var(--space-md);
+  }
+
+  .header__logo {
+    position: relative;
+    left: 0;
   }
 
   .header__links {

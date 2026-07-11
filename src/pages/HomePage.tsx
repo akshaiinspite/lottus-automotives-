@@ -266,9 +266,14 @@ const WhyChooseSection = () => {
         <div className="why__cards">
           {whyChooseData.map((item, i) => (
             <article className="why-card glass-card" key={i} id={`why-card-${i}`}>
-              <div className="why-card__icon-box">{item.icon}</div>
-              <h3 className="why-card__title">{item.title}</h3>
-              <p className="why-card__desc">{item.desc}</p>
+              <div className="why-card__img-container">
+                <img src={item.image} alt={item.title} className="why-card__img" loading="lazy" />
+                <div className="why-card__icon-overlay">{item.icon}</div>
+              </div>
+              <div className="why-card__content">
+                <h3 className="why-card__title">{item.title}</h3>
+                <p className="why-card__desc">{item.desc}</p>
+              </div>
             </article>
           ))}
         </div>
