@@ -1,11 +1,11 @@
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState, type ReactNode } from 'react'
 import { Link } from 'react-router-dom'
 import { gsap } from 'gsap'
 import './ServicesPage.css'
 
 interface ServiceCategory {
   title: string
-  icon: JSX.Element
+  icon: ReactNode
   items: string[]
 }
 
