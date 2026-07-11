@@ -8,27 +8,15 @@ gsap.registerPlugin(ScrollTrigger)
 
 /* ===== HERO SECTION ===== */
 const HeroSection = () => {
-  const [currentSlide, setCurrentSlide] = useState(0)
   const heroRef = useRef<HTMLElement>(null)
-  const slides = ['/hero_slide_1.png', '/hero_slide_2.png', '/hero_slide_3.png']
-
-  // Ken Burns slideshow
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentSlide((prev) => (prev + 1) % slides.length)
-    }, 6000)
-    return () => clearInterval(interval)
-  }, [slides.length])
 
   // GSAP entrance
   useEffect(() => {
     if (!heroRef.current) return
     const ctx = gsap.context(() => {
       const tl = gsap.timeline({ defaults: { ease: 'power3.out' } })
-      tl.fromTo('.hero__label', { y: 30, opacity: 0 }, { y: 0, opacity: 1, duration: 0.8, delay: 0.3 })
-        .fromTo('.hero__title', { y: 50, opacity: 0 }, { y: 0, opacity: 1, duration: 1 }, '-=0.4')
-        .fromTo('.hero__description', { y: 30, opacity: 0 }, { y: 0, opacity: 1, duration: 0.8 }, '-=0.5')
-        .fromTo('.hero__cta-group', { y: 30, opacity: 0 }, { y: 0, opacity: 1, duration: 0.8 }, '-=0.4')
+      tl.fromTo('.hero__text-col > *', { y: 30, opacity: 0 }, { y: 0, opacity: 1, duration: 0.8, stagger: 0.15, delay: 0.3 })
+        .fromTo('.hero__image-col', { x: 50, opacity: 0 }, { x: 0, opacity: 1, duration: 1 }, '-=0.6')
         .fromTo('.hero__scroll-indicator', { opacity: 0 }, { opacity: 1, duration: 1 }, '-=0.3')
     }, heroRef)
     return () => ctx.revert()
@@ -36,46 +24,40 @@ const HeroSection = () => {
 
   return (
     <section className="hero" ref={heroRef} id="hero-section" aria-label="Hero banner – Premium car service Kochi">
-      {/* Background Slideshow */}
-      <div className="hero__slideshow" aria-hidden="true">
-        {slides.map((src, i) => (
-          <div
-            key={i}
-            className={`hero__slide ${i === currentSlide ? 'hero__slide--active' : ''}`}
-          >
-            <img
-              src={src}
-              alt={`Premium automotive service environment ${i + 1}`}
-              className="hero__slide-img"
-              loading={i === 0 ? 'eager' : 'lazy'}
-            />
-          </div>
-        ))}
-      </div>
-
-      {/* Gradient Overlay */}
-      <div className="hero__overlay" aria-hidden="true"></div>
-
       {/* Content */}
       <div className="hero__content container">
-        <span className="hero__label section-label">Lottus Automotives</span>
-        <h1 className="hero__title">
-          Drive with Confidence.<br />
-          <span className="text-orange">Service with Excellence.</span>
-        </h1>
-        <p className="hero__description">
-          Experience complete automotive care in Kochi, from routine maintenance to advanced diagnostics
-          and luxury vehicle repairs. Our skilled technicians, state-of-the-art equipment, and commitment
-          to quality ensure that every journey begins with a vehicle you can trust.
-        </p>
-        <div className="hero__cta-group">
-          <Link to="/services" className="btn-primary" id="hero-cta-services">
-            Explore Services
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
-          </Link>
-          <Link to="/contact" className="btn-outline" id="hero-cta-contact">
-            Book a Consultation
-          </Link>
+        <div className="hero__grid">
+          <div className="hero__text-col">
+            <span className="hero__label section-label">Lottus Automotives</span>
+            <h1 className="hero__title" style={{ fontSize: 'clamp(2.2rem, 4.5vw, 3.5rem)', lineHeight: '1.15' }}>
+              Drive with Confidence.<br />
+              <span className="text-orange">Service with Excellence.</span>
+            </h1>
+            <p className="hero__description" style={{ fontSize: '0.98rem', lineHeight: '1.75' }}>
+              Experience complete automotive care in Kochi, from routine maintenance to advanced diagnostics
+              and luxury vehicle repairs. Our skilled technicians, state-of-the-art equipment, and commitment
+              to quality ensure that every journey begins with a vehicle you can trust.
+            </p>
+            <div className="hero__cta-group">
+              <Link to="/services" className="btn-primary" id="hero-cta-services">
+                Explore Services
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+              </Link>
+              <Link to="/contact" className="btn-outline" id="hero-cta-contact">
+                Book a Consultation
+              </Link>
+            </div>
+          </div>
+          <div className="hero__image-col">
+            <div className="hero__car-frame">
+              <img
+                src="/hero_car_display.png"
+                alt="Luxury sports car Porsche 911"
+                className="hero__car-img"
+                loading="eager"
+              />
+            </div>
+          </div>
         </div>
       </div>
 
