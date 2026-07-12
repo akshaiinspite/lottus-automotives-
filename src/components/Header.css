@@ -203,3 +203,36 @@
     padding: 3rem 1.5rem;
   }
 }
+
+/* Appointment Button */
+.header__btn-appointment.btn-primary {
+  position: absolute;
+  right: var(--space-md);
+  padding: 0.45rem 0.9rem;
+  font-size: 0.72rem;
+  letter-spacing: 1px;
+  font-weight: 600;
+  text-transform: uppercase;
+  z-index: 101;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  border-radius: 4px;
+  transition: all var(--transition-medium);
+}
+
+.header__mobile-cta {
+  display: none;
+  width: 100%;
+}
+
+@media (max-width: 1024px) {
+  .header__btn-appointment.btn-primary {
+    display: none;
+  }
+  .header__mobile-cta {
+    display: block;
+    width: 100%;
+    margin-top: 1.5rem;
+  }
+}

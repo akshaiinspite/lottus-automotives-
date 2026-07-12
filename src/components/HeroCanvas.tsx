@@ -87,7 +87,11 @@ const HeroCanvas = ({ images }: HeroCanvasProps) => {
     // Load Textures
     const textureLoader = new THREE.TextureLoader()
     const textures = images.map((src) => {
-      const tex = textureLoader.load(src)
+      const tex = textureLoader.load(src, () => {
+        if (typeof handleResize === 'function') {
+          handleResize()
+        }
+      })
       tex.minFilter = THREE.LinearFilter
       tex.generateMipmaps = false
       return tex
@@ -137,7 +141,12 @@ const HeroCanvas = ({ images }: HeroCanvasProps) => {
 
     // Helper to calculate object-fit: cover scaling factors
     const getScale = (w: number, h: number) => {
-      const imageAspect = 16 / 9;
+      let imageAspect = 1.0;
+      const loadedTex = texturesRef.current.find((t) => t && t.image && (t.image as any).width);
+      if (loadedTex && loadedTex.image) {
+        const img = loadedTex.image as HTMLImageElement;
+        imageAspect = img.width / img.height;
+      }
       const containerAspect = w / h;
       let scaleX = 1;
       let scaleY = 1;

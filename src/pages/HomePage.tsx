@@ -112,7 +112,7 @@ const AboutSection = () => {
         <div className="about__grid">
           <div className="about__image-wrapper">
             <img
-              src="/about_workshop.png"
+              src="/WhatsApp Image 2026-07-12 at 09.42.36.jpeg"
               alt="Certified technician inspecting a luxury car engine – Lottus Automotives workshop Kochi"
               className="about__image"
               loading="lazy"
@@ -421,6 +421,228 @@ const CustomerPromise = () => {
   )
 }
 
+/* ===== GALLERY SECTION ===== */
+const galleryImages = [
+  '/WhatsApp Image 2026-07-12 at 09.42.31.jpeg',
+  '/WhatsApp Image 2026-07-12 at 09.42.32.jpeg',
+  '/WhatsApp Image 2026-07-12 at 09.42.33.jpeg',
+  '/WhatsApp Image 2026-07-12 at 09.42.34.jpeg',
+  '/WhatsApp Image 2026-07-12 at 09.42.35.jpeg',
+  '/WhatsApp Image 2026-07-12 at 09.42.37.jpeg',
+]
+
+const GallerySection = () => {
+  const sectionRef = useRef<HTMLElement>(null)
+  const scrollContainerRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    if (!sectionRef.current) return
+    const ctx = gsap.context(() => {
+      gsap.fromTo('.gallery__header',
+        { y: 50, opacity: 0 },
+        {
+          y: 0, opacity: 1,
+          duration: 0.8,
+          ease: 'power3.out',
+          scrollTrigger: {
+            trigger: sectionRef.current,
+            start: 'top 85%',
+            toggleActions: 'play none none none',
+          }
+        }
+      )
+    }, sectionRef)
+    return () => ctx.revert()
+  }, [])
+
+  const handleScroll = (direction: 'left' | 'right') => {
+    const container = scrollContainerRef.current
+    if (!container) return
+    const scrollAmount = 350
+    const targetScroll = container.scrollLeft + (direction === 'left' ? -scrollAmount : scrollAmount)
+    gsap.to(container, {
+      scrollLeft: targetScroll,
+      duration: 0.5,
+      ease: 'power2.out'
+    })
+  }
+
+  return (
+    <section className="gallery" ref={sectionRef} id="gallery-section" aria-labelledby="gallery-heading">
+      <div className="container">
+        <div className="gallery__header-wrapper">
+          <div className="gallery__header">
+            <span className="section-label">Gallery</span>
+            <h2 className="section-heading" id="gallery-heading">
+              Our <span className="text-orange">Premium Workshop</span> in Action
+            </h2>
+            <p className="section-subtext">
+              Take a look inside Lottus Automotives Kochi. We maintain a clean, organized, and state-of-the-art facility to ensure your vehicle receives top-tier care.
+            </p>
+          </div>
+          <div className="gallery__controls">
+            <button
+              onClick={() => handleScroll('left')}
+              className="gallery__btn"
+              aria-label="Scroll gallery left"
+            >
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                <path d="m15 18-6-6 6-6"/>
+              </svg>
+            </button>
+            <button
+              onClick={() => handleScroll('right')}
+              className="gallery__btn"
+              aria-label="Scroll gallery right"
+            >
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                <path d="m9 18 6-6-6-6"/>
+              </svg>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div className="gallery__marquee-wrapper" ref={scrollContainerRef}>
+        <div className="gallery__marquee-track">
+          {galleryImages.map((img, i) => (
+            <div className="gallery__item" key={i}>
+              <img
+                src={img}
+                alt="Lottus Automotives professional workshop facility Kochi"
+                className="gallery__img"
+                loading="lazy"
+              />
+              <div className="gallery__item-overlay">
+                <div className="gallery__item-accent"></div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  )
+}
+
+/* ===== REVIEWS SECTION ===== */
+const reviews = [
+  {
+    name: 'Anandhu Krishna',
+    rating: 5,
+    text: 'Excellent service! Handed over my BMW 5 Series for suspension work and general service. The team diagnosed the issue precisely and fixed it. Highly recommended for luxury car service in Kochi.',
+    date: '2 weeks ago',
+    avatar: 'A'
+  },
+  {
+    name: 'Rohan Mathew',
+    rating: 5,
+    text: 'The most reliable luxury car workshop in Kerala. Extremely professional staff, transparent pricing, and state-of-the-art diagnostic tools. Serviced my Audi A6 here and the experience was flawless.',
+    date: '1 month ago',
+    avatar: 'R'
+  },
+  {
+    name: 'Deepak Menon',
+    rating: 5,
+    text: 'Outstanding customer service and high-quality workmanship. They took care of my Porsche Cayenne with utmost dedication. Very clean facility and expert technicians.',
+    date: '3 months ago',
+    avatar: 'D'
+  }
+]
+
+const ReviewsSection = () => {
+  const sectionRef = useRef<HTMLElement>(null)
+
+  useEffect(() => {
+    if (!sectionRef.current) return
+    const ctx = gsap.context(() => {
+      gsap.fromTo('.reviews__header',
+        { y: 45, opacity: 0 },
+        {
+          y: 0, opacity: 1,
+          duration: 0.8,
+          ease: 'power3.out',
+          scrollTrigger: {
+            trigger: sectionRef.current,
+            start: 'top 85%',
+            toggleActions: 'play none none none',
+          }
+        }
+      )
+      gsap.fromTo('.reviews__card',
+        { y: 50, opacity: 0 },
+        {
+          y: 0, opacity: 1,
+          duration: 0.8,
+          stagger: 0.15,
+          ease: 'power3.out',
+          scrollTrigger: {
+            trigger: sectionRef.current,
+            start: 'top 75%',
+            toggleActions: 'play none none none',
+          }
+        }
+      )
+    }, sectionRef)
+    return () => ctx.revert()
+  }, [])
+
+  return (
+    <section className="reviews" ref={sectionRef} id="google-reviews" aria-labelledby="reviews-heading">
+      <div className="container">
+        <div className="reviews__header">
+          <span className="section-label">Testimonials</span>
+          <h2 className="section-heading" id="reviews-heading">
+            Trusted by <span className="text-orange">Luxury Car Owners</span>
+          </h2>
+          <div className="reviews__google-badge">
+            <span className="reviews__rating-num">4.9</span>
+            <div className="reviews__stars">
+              {[...Array(5)].map((_, i) => (
+                <svg key={i} className="reviews__star-icon" width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                  <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
+                </svg>
+              ))}
+            </div>
+            <span className="reviews__count">on Google Reviews</span>
+          </div>
+        </div>
+
+        <div className="reviews__grid">
+          {reviews.map((rev, idx) => (
+            <div className="reviews__card glass-card" key={idx}>
+              <div className="reviews__card-top">
+                <div className="reviews__reviewer">
+                  <div className="reviews__avatar">{rev.avatar}</div>
+                  <div>
+                    <h3 className="reviews__name">{rev.name}</h3>
+                    <span className="reviews__date">{rev.date}</span>
+                  </div>
+                </div>
+                <div className="reviews__stars">
+                  {[...Array(rev.rating)].map((_, i) => (
+                    <svg key={i} className="reviews__star-icon" width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+                      <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
+                    </svg>
+                  ))}
+                </div>
+              </div>
+              <p className="reviews__text">&ldquo;{rev.text}&rdquo;</p>
+              <div className="reviews__card-google-logo">
+                <svg width="18" height="18" viewBox="0 0 24 24">
+                  <path fill="#EA4335" d="M12 5.04c1.7 0 3.2.6 4.4 1.8l3.3-3.3C17.7 1.6 15 1 12 1 7.3 1 3.4 3.7 1.5 7.7l3.9 3C6.3 7.8 8.9 5.04 12 5.04z" />
+                  <path fill="#4285F4" d="M23.5 12.3c0-.8-.1-1.6-.2-2.3H12v4.4h6.5c-.3 1.5-1.1 2.8-2.4 3.6l3.7 2.9c2.1-2 3.7-4.9 3.7-8.6z" />
+                  <path fill="#FBBC05" d="M5.4 10.7c-.2-.6-.3-1.3-.3-2s.1-1.4.3-2L1.5 3.7C.5 5.6 0 7.8 0 10.1s.5 4.5 1.5 6.4l3.9-3c-.2-.6-.3-1.3-.3-2.1z" />
+                  <path fill="#34A853" d="M12 23c3.2 0 6-1.1 7.9-2.9l-3.7-2.9c-1.1.7-2.5 1.2-4.2 1.2-3.1 0-5.7-2.1-6.6-4.9l-3.9 3C3.4 20.3 7.3 23 12 23z" />
+                </svg>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  )
+}
+
 /* ===== HOME PAGE ===== */
 const HomePage = () => {
   useEffect(() => {
@@ -434,9 +656,13 @@ const HomePage = () => {
       <div className="section-divider" aria-hidden="true" />
       <WhyChooseSection />
       <div className="section-divider" aria-hidden="true" />
+      <GallerySection />
+      <div className="section-divider" aria-hidden="true" />
       <FeaturedExpertise />
       <div className="section-divider" aria-hidden="true" />
       <CustomerPromise />
+      <div className="section-divider" aria-hidden="true" />
+      <ReviewsSection />
     </>
   )
 }
