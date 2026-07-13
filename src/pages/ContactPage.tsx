@@ -52,7 +52,7 @@ const ContactPage = () => {
         <div className="contact-hero__bg" aria-hidden="true">
           <img
             src="/contact_hero_banner.png"
-            alt="Premium automotive service reception at Lottus Automotives Kochi"
+            alt="Premium automotive service reception at GT Autohaus Kochi"
             loading="eager"
           />
         </div>
@@ -185,7 +185,7 @@ const ContactPage = () => {
                 </div>
                 <h3 className="contact__info-title">Email</h3>
                 <p className="contact__info-text">
-                  <a href="mailto:info@lottusautomotives.com">info@lottusautomotives.com</a>
+                  <a href="mailto:info@gtautohaus.com">info@gtautohaus.com</a>
                 </p>
               </div>
               <div className="contact__info-item glass-card">

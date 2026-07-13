@@ -29,7 +29,7 @@ const HeroSection = () => {
       <div className="hero__content container">
         <div className="hero__grid">
           <div className="hero__text-col">
-            <span className="hero__label section-label">Lottus Automotives</span>
+            <span className="hero__label section-label">GT Autohaus</span>
             <h1 className="hero__title" style={{ fontSize: 'clamp(2.2rem, 4.5vw, 3.5rem)', lineHeight: '1.15' }}>
               Drive with Confidence.<br />
               <span className="text-orange">Service with Excellence.</span>
@@ -113,7 +113,7 @@ const AboutSection = () => {
           <div className="about__image-wrapper">
             <img
               src="/WhatsApp Image 2026-07-12 at 09.42.36.jpeg"
-              alt="Certified technician inspecting a luxury car engine – Lottus Automotives workshop Kochi"
+              alt="Certified technician inspecting a luxury car engine – GT Autohaus workshop Kochi"
               className="about__image"
               loading="lazy"
               width="600"
@@ -132,20 +132,6 @@ const AboutSection = () => {
               service, we deliver repairs and maintenance that exceed expectations. Whether you drive a
               family car or a high-end luxury vehicle, your satisfaction is our priority.
             </p>
-            <div className="about__stats">
-              <div className="about__stat">
-                <span className="about__stat-number">15+</span>
-                <span className="about__stat-label">Years Experience</span>
-              </div>
-              <div className="about__stat">
-                <span className="about__stat-number">5000+</span>
-                <span className="about__stat-label">Vehicles Serviced</span>
-              </div>
-              <div className="about__stat">
-                <span className="about__stat-number">100%</span>
-                <span className="about__stat-label">Customer Satisfaction</span>
-              </div>
-            </div>
           </div>
         </div>
       </div>
@@ -257,10 +243,10 @@ const WhyChooseSection = () => {
         <div className="why__header">
           <span className="section-label">Why Choose Us</span>
           <h2 className="section-heading" id="why-heading">
-            The <span className="text-orange">Lottus</span> Advantage
+            The <span className="text-orange">GT Autohaus</span> Advantage
           </h2>
           <p className="section-subtext">
-            Discover why discerning vehicle owners across Kerala trust Lottus Automotives for their premium car service needs.
+            Discover why discerning vehicle owners across Kerala trust GT Autohaus for their premium car service needs.
           </p>
         </div>
         <div className="why__cards">
@@ -455,51 +441,17 @@ const GallerySection = () => {
     return () => ctx.revert()
   }, [])
 
-  const handleScroll = (direction: 'left' | 'right') => {
-    const container = scrollContainerRef.current
-    if (!container) return
-    const scrollAmount = 350
-    const targetScroll = container.scrollLeft + (direction === 'left' ? -scrollAmount : scrollAmount)
-    gsap.to(container, {
-      scrollLeft: targetScroll,
-      duration: 0.5,
-      ease: 'power2.out'
-    })
-  }
-
   return (
     <section className="gallery" ref={sectionRef} id="gallery-section" aria-labelledby="gallery-heading">
       <div className="container">
-        <div className="gallery__header-wrapper">
-          <div className="gallery__header">
-            <span className="section-label">Gallery</span>
-            <h2 className="section-heading" id="gallery-heading">
-              Our <span className="text-orange">Premium Workshop</span> in Action
-            </h2>
-            <p className="section-subtext">
-              Take a look inside Lottus Automotives Kochi. We maintain a clean, organized, and state-of-the-art facility to ensure your vehicle receives top-tier care.
-            </p>
-          </div>
-          <div className="gallery__controls">
-            <button
-              onClick={() => handleScroll('left')}
-              className="gallery__btn"
-              aria-label="Scroll gallery left"
-            >
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                <path d="m15 18-6-6 6-6"/>
-              </svg>
-            </button>
-            <button
-              onClick={() => handleScroll('right')}
-              className="gallery__btn"
-              aria-label="Scroll gallery right"
-            >
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                <path d="m9 18 6-6-6-6"/>
-              </svg>
-            </button>
-          </div>
+        <div className="gallery__header">
+          <span className="section-label">Gallery</span>
+          <h2 className="section-heading" id="gallery-heading">
+            Our <span className="text-orange">Premium Workshop</span> in Action
+          </h2>
+          <p className="section-subtext">
+            Take a look inside GT Autohaus Kochi. We maintain a clean, organized, and state-of-the-art facility to ensure your vehicle receives top-tier care.
+          </p>
         </div>
       </div>
 
@@ -509,7 +461,7 @@ const GallerySection = () => {
             <div className="gallery__item" key={i}>
               <img
                 src={img}
-                alt="Lottus Automotives professional workshop facility Kochi"
+                alt="GT Autohaus professional workshop facility Kochi"
                 className="gallery__img"
                 loading="lazy"
               />
@@ -643,6 +595,84 @@ const ReviewsSection = () => {
   )
 }
 
+/* ===== STATS COUNTER SECTION ===== */
+const StatsSection = () => {
+  const statsRef = useRef<HTMLElement>(null)
+
+  useEffect(() => {
+    if (!statsRef.current) return
+    const ctx = gsap.context(() => {
+      const counters = statsRef.current?.querySelectorAll('.stats-counter__number')
+      if (!counters) return
+
+      counters.forEach((counter) => {
+        const target = parseFloat(counter.getAttribute('data-target') || '0')
+        const suffix = counter.getAttribute('data-suffix') || ''
+
+        const obj = { value: 0 }
+        gsap.to(obj, {
+          value: target,
+          duration: 1.8,
+          ease: 'power2.out',
+          scrollTrigger: {
+            trigger: counter,
+            start: 'top 90%',
+            toggleActions: 'play none none none',
+          },
+          onUpdate: () => {
+            counter.textContent = Math.floor(obj.value) + suffix
+          }
+        })
+      })
+
+      gsap.fromTo('.stats-counter__item',
+        { y: 20, opacity: 0 },
+        {
+          y: 0,
+          opacity: 1,
+          duration: 0.8,
+          stagger: 0.15,
+          ease: 'power3.out',
+          scrollTrigger: {
+            trigger: statsRef.current,
+            start: 'top 90%',
+          }
+        }
+      )
+    }, statsRef)
+    return () => ctx.revert()
+  }, [])
+
+  return (
+    <section className="stats-counter" ref={statsRef} id="stats-section">
+      <div className="container">
+        <div className="stats-counter__banner glass-card">
+          <div className="stats-counter__item">
+            <div className="stats-counter__item-inner">
+              <span className="stats-counter__number" data-target="15" data-suffix="+">0+</span>
+              <span className="stats-counter__label">Years Experience</span>
+            </div>
+          </div>
+          <div className="stats-counter__divider" aria-hidden="true" />
+          <div className="stats-counter__item">
+            <div className="stats-counter__item-inner">
+              <span className="stats-counter__number" data-target="5000" data-suffix="+">0+</span>
+              <span className="stats-counter__label">Vehicles Serviced</span>
+            </div>
+          </div>
+          <div className="stats-counter__divider" aria-hidden="true" />
+          <div className="stats-counter__item">
+            <div className="stats-counter__item-inner">
+              <span className="stats-counter__number" data-target="100" data-suffix="%">0%</span>
+              <span className="stats-counter__label">Customer Satisfaction</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  )
+}
+
 /* ===== HOME PAGE ===== */
 const HomePage = () => {
   useEffect(() => {
@@ -653,6 +683,8 @@ const HomePage = () => {
     <>
       <HeroSection />
       <AboutSection />
+      <div className="section-divider" aria-hidden="true" />
+      <StatsSection />
       <div className="section-divider" aria-hidden="true" />
       <WhyChooseSection />
       <div className="section-divider" aria-hidden="true" />

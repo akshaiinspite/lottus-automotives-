@@ -41,10 +41,10 @@ const Header = () => {
       id="site-header"
     >
       <nav className="header__nav container-wide" aria-label="Main navigation">
-        <Link to="/" className="header__logo" aria-label="Lottus Automotives – Home">
+        <Link to="/" className="header__logo" aria-label="GT Autohaus – Home">
           <img
             src="/WhatsApp Image 2026-07-11 at 12.31.57.jpeg"
-            alt="Lottus Automotives logo – Premium Car Service Kochi"
+            alt="GT Autohaus logo – Premium Car Service Kochi"
             className="header__logo-img"
             width="160"
             height="48"
@@ -65,7 +65,7 @@ const Header = () => {
           ))}
           <li className="header__mobile-cta">
             <a
-              href="https://wa.me/919061099906?text=Hello%20Lottus%20Automotives,%20I'd%20like%20to%20book%20an%20appointment%20for%20my%20car."
+              href="https://wa.me/919061099906?text=Hello%20GT%20Autohaus,%20I'd%20like%20to%20book%20an%20appointment%20for%20my%20car."
               target="_blank"
               rel="noopener noreferrer"
               className="btn-primary"
@@ -83,7 +83,7 @@ const Header = () => {
         </ul>
 
         <a
-          href="https://wa.me/919061099906?text=Hello%20Lottus%20Automotives,%20I'd%20like%20to%20book%20an%20appointment%20for%20my%20car."
+          href="https://wa.me/919061099906?text=Hello%20GT%20Autohaus,%20I'd%20like%20to%20book%20an%20appointment%20for%20my%20car."
           target="_blank"
           rel="noopener noreferrer"
           className="header__btn-appointment btn-primary"

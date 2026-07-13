@@ -371,7 +371,7 @@ const ServicesPage = () => {
         <div className="services-hero__bg" aria-hidden="true">
           <img
             src="/services_hero_banner.png"
-            alt="Lottus Automotives Services Banner"
+            alt="GT Autohaus Services Banner"
             loading="eager"
           />
         </div>

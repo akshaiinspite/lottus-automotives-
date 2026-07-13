@@ -12,10 +12,10 @@ const Footer = () => {
         <div className="footer__grid">
           {/* Brand Column */}
           <div className="footer__brand">
-            <Link to="/" aria-label="Lottus Automotives Home">
+            <Link to="/" aria-label="GT Autohaus Home">
               <img
                 src="/WhatsApp Image 2026-07-11 at 12.31.57.jpeg"
-                alt="Lottus Automotives logo – Luxury Car Service Centre Kochi"
+                alt="GT Autohaus logo – Luxury Car Service Centre Kochi"
                 className="footer__logo"
                 width="180"
                 height="54"
@@ -55,8 +55,8 @@ const Footer = () => {
             <address className="footer__address">
               <p>Kochi, Kerala, India</p>
               <p>
-                <a href="mailto:info@lottusautomotives.com" className="footer__link">
-                  info@lottusautomotives.com
+                <a href="mailto:info@gtautohaus.com" className="footer__link">
+                  info@gtautohaus.com
                 </a>
               </p>
             </address>
@@ -66,7 +66,7 @@ const Footer = () => {
         {/* Bottom Bar */}
         <div className="footer__bottom">
           <p className="footer__copy">
-            &copy; {currentYear} Lottus Automotives. All rights reserved.
+            &copy; {currentYear} GT Autohaus. All rights reserved.
           </p>
           <p className="footer__credit">
             Precision Engineering. Uncompromising Quality.
