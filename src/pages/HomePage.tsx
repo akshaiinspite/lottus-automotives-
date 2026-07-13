@@ -25,6 +25,12 @@ const HeroSection = () => {
 
   return (
     <section className="hero" ref={heroRef} id="hero-section" aria-label="Hero banner – Premium car service Kochi">
+      {/* Background Image and Overlay */}
+      <div className="hero__bg-image" aria-hidden="true">
+        <img src="/WhatsApp Image 2026-07-12 at 09.42.33.jpeg" alt="GT Autohaus premium car showroom building" loading="eager" />
+      </div>
+      <div className="hero__overlay" aria-hidden="true"></div>
+
       {/* Content */}
       <div className="hero__content container">
         <div className="hero__grid">
@@ -52,7 +58,6 @@ const HeroSection = () => {
           <div className="hero__image-col">
             <HeroCanvas
               images={[
-                '/hero_car_display.png',
                 '/hero_car_display_2.png',
                 '/hero_car_display_3.png'
               ]}
@@ -112,7 +117,7 @@ const AboutSection = () => {
         <div className="about__grid">
           <div className="about__image-wrapper">
             <img
-              src="/WhatsApp Image 2026-07-12 at 09.42.36.jpeg"
+              src="/WhatsApp Image 2026-07-13 at 14.46.34.jpeg"
               alt="Certified technician inspecting a luxury car engine – GT Autohaus workshop Kochi"
               className="about__image"
               loading="lazy"

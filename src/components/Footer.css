@@ -43,11 +43,11 @@
 
 /* Brand */
 .footer__brand {
-  max-width: 320px;
+  max-width: 400px;
 }
 
 .footer__logo {
-  height: 54px;
+  height: 110px;
   width: auto;
   object-fit: contain;
   margin-bottom: var(--space-md);

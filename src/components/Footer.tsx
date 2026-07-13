@@ -14,11 +14,11 @@ const Footer = () => {
           <div className="footer__brand">
             <Link to="/" aria-label="GT Autohaus Home">
               <img
-                src="/WhatsApp Image 2026-07-11 at 12.31.57.jpeg"
+                src="/logo (2).png"
                 alt="GT Autohaus logo – Luxury Car Service Centre Kochi"
                 className="footer__logo"
-                width="180"
-                height="54"
+                width="330"
+                height="110"
                 loading="lazy"
               />
             </Link>
@@ -66,7 +66,7 @@ const Footer = () => {
         {/* Bottom Bar */}
         <div className="footer__bottom">
           <p className="footer__copy">
-            &copy; {currentYear} GT Autohaus. All rights reserved.
+            &copy; {currentYear} GT Autohaus. All rights reserved. | Crafted by <span className="text-orange" style={{ fontWeight: 600 }}>Hydrox</span>
           </p>
           <p className="footer__credit">
             Precision Engineering. Uncompromising Quality.

@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import * as THREE from 'three'
 import { gsap } from 'gsap'
+import { motion } from 'framer-motion'
 
 interface HeroCanvasProps {
   images: string[]
@@ -10,6 +11,7 @@ const HeroCanvas = ({ images }: HeroCanvasProps) => {
   const containerRef = useRef<HTMLDivElement>(null)
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const [currentIndex, setCurrentIndex] = useState(0)
+  const [flipRotation, setFlipRotation] = useState(0)
   const animRef = useRef<{ progress: number }>({ progress: 0 })
   const materialRef = useRef<THREE.ShaderMaterial | null>(null)
   const texturesRef = useRef<THREE.Texture[]>([])
@@ -25,6 +27,9 @@ const HeroCanvas = ({ images }: HeroCanvasProps) => {
 
   const triggerTransition = (nextIndex: number) => {
     if (!materialRef.current || texturesRef.current.length === 0) return
+
+    // Trigger the 3D flip spin rotation
+    setFlipRotation(prev => prev + 360)
 
     // Set next texture to texture2 uniform
     materialRef.current.uniforms.texture2.value = texturesRef.current[nextIndex]
@@ -75,14 +80,16 @@ const HeroCanvas = ({ images }: HeroCanvasProps) => {
     )
     camera.position.z = 1
 
-    // Renderer
+    // Renderer — alpha: true + premultipliedAlpha: false for clean PNG transparency
     const renderer = new THREE.WebGLRenderer({
       canvas,
       antialias: true,
-      alpha: true
+      alpha: true,
+      premultipliedAlpha: false
     })
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
     renderer.setSize(width, height)
+    renderer.setClearColor(0x000000, 0) // fully transparent clear
 
     // Load Textures
     const textureLoader = new THREE.TextureLoader()
@@ -94,6 +101,7 @@ const HeroCanvas = ({ images }: HeroCanvasProps) => {
       })
       tex.minFilter = THREE.LinearFilter
       tex.generateMipmaps = false
+      tex.colorSpace = THREE.SRGBColorSpace
       return tex
     })
     texturesRef.current = textures
@@ -107,6 +115,7 @@ const HeroCanvas = ({ images }: HeroCanvasProps) => {
       }
     `
 
+    // Fragment shader with aggressive background removal (white, grey, checkerboard patterns)
     const fragmentShader = `
       varying vec2 vUv;
       uniform sampler2D texture1;
@@ -115,31 +124,70 @@ const HeroCanvas = ({ images }: HeroCanvasProps) => {
       uniform float time;
       uniform vec2 scale;
       
+      // Aggressive background removal — strips white, grey, and baked checkerboard patterns
+      float removeBackground(vec3 rgb) {
+        float lum = dot(rgb, vec3(0.2126, 0.7152, 0.0722));
+        
+        // Channel spread — how different R, G, B are from each other
+        // Checkerboard/grey/white bg pixels have R ≈ G ≈ B (spread ≈ 0)
+        // Real car paint always has SOME color tint (spread > 0.03)
+        float maxC = max(max(rgb.r, rgb.g), rgb.b);
+        float minC = min(min(rgb.r, rgb.g), rgb.b);
+        float spread = maxC - minC;
+        
+        // Perfectly achromatic pixels (R=G=B) at any brightness → background
+        // This catches both white squares AND grey squares of the checkerboard
+        float achromaticMask = smoothstep(0.04, 0.008, spread);
+        
+        // Only apply to mid-to-high luminance (don't remove dark car parts like tires/grille)
+        float lumGate = smoothstep(0.25, 0.42, lum);
+        
+        // Combined: achromatic + not too dark = background
+        float bgMask = achromaticMask * lumGate;
+        
+        // Also catch any very bright pixels regardless (near-white highlights in bg)
+        float brightWhite = smoothstep(0.88, 0.96, lum);
+        
+        return max(bgMask, brightWhite);
+      }
+      
       void main() {
-        // Apply object-fit cover texture scaling
+        // Apply object-fit contain texture scaling
         vec2 uv = (vUv - 0.5) * scale + 0.5;
         
-        // Liquid wave wave-distortion equations
-        float wave = sin(uv.y * 10.0 + time * 1.5) * 0.03;
-        float wave2 = cos(uv.x * 10.0 - time * 1.5) * 0.03;
+        // Discard pixels outside the texture bounds
+        if (uv.x < 0.0 || uv.x > 1.0 || uv.y < 0.0 || uv.y > 1.0) {
+          discard;
+        }
         
-        // Distort UV coordinates based on transition progress
-        vec2 distortedUv1 = vec2(uv.x + progress * wave, uv.y + progress * wave2);
-        vec2 distortedUv2 = vec2(uv.x - (1.0 - progress) * wave, uv.y - (1.0 - progress) * wave2);
+        // Subtle wave distortion during transitions
+        float wave = sin(uv.y * 10.0 + time * 1.5) * 0.015;
+        float wave2 = cos(uv.x * 10.0 - time * 1.5) * 0.015;
         
-        // Prevent UV clamping/bleeding at edges
-        distortedUv1 = clamp(distortedUv1, 0.0, 1.0);
-        distortedUv2 = clamp(distortedUv2, 0.0, 1.0);
+        vec2 distortedUv1 = clamp(vec2(uv.x + progress * wave, uv.y + progress * wave2), 0.0, 1.0);
+        vec2 distortedUv2 = clamp(vec2(uv.x - (1.0 - progress) * wave, uv.y - (1.0 - progress) * wave2), 0.0, 1.0);
         
-        // Liquid ripple blend
+        // Sample textures
         vec4 color1 = texture2D(texture1, distortedUv1);
         vec4 color2 = texture2D(texture2, distortedUv2);
         
-        gl_FragColor = mix(color1, color2, progress);
+        // Blend during transitions
+        vec4 result = mix(color1, color2, progress);
+        
+        // Apply aggressive background removal
+        float bgMask = removeBackground(result.rgb);
+        result.a *= (1.0 - bgMask);
+        
+        // Discard transparent pixels
+        if (result.a < 0.05) {
+          discard;
+        }
+        
+        gl_FragColor = result;
       }
     `
 
-    // Helper to calculate object-fit: cover scaling factors
+    // Helper to calculate object-fit: contain scaling factors
     const getScale = (w: number, h: number) => {
       let imageAspect = 1.0;
       const loadedTex = texturesRef.current.find((t) => t && t.image && (t.image as any).width);
@@ -151,9 +199,9 @@ const HeroCanvas = ({ images }: HeroCanvasProps) => {
       let scaleX = 1;
       let scaleY = 1;
       if (containerAspect > imageAspect) {
-        scaleY = imageAspect / containerAspect;
-      } else {
         scaleX = containerAspect / imageAspect;
+      } else {
+        scaleY = imageAspect / containerAspect;
       }
       return new THREE.Vector2(scaleX, scaleY);
     }
@@ -170,7 +218,9 @@ const HeroCanvas = ({ images }: HeroCanvasProps) => {
         time: { value: 0 },
         scale: { value: getScale(width, height) }
       },
-      transparent: true
+      transparent: true,
+      depthWrite: false,
+      blending: THREE.NormalBlending
     })
     materialRef.current = material
 
@@ -228,7 +278,28 @@ const HeroCanvas = ({ images }: HeroCanvasProps) => {
 
   return (
     <div ref={containerRef} className="hero-canvas-container">
-      <canvas ref={canvasRef} className="hero-canvas" />
+      <motion.div
+        className="hero-canvas-3d-wrapper"
+        animate={{ rotateY: flipRotation }}
+        transition={{ duration: 1.2, ease: "easeInOut" }}
+      >
+        <motion.div
+          className="hero-canvas-motion-wrapper"
+          animate={{
+            x: [0, 20, 0, -20, 0],
+            y: [-10, 0, 10, 0, -10],
+            rotate: [0, 2, 0, -2, 0],
+            scale: [1, 1.03, 1]
+          }}
+          transition={{
+            duration: 14,
+            repeat: Infinity,
+            ease: "linear"
+          }}
+        >
+          <canvas ref={canvasRef} className="hero-canvas" />
+        </motion.div>
+      </motion.div>
       
       {/* Navigation Indicators */}
       <div className="hero-canvas-nav">
