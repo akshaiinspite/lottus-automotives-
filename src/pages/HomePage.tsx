@@ -552,7 +552,7 @@ const ReviewsSection = () => {
             Trusted by <span className="text-orange">Luxury Car Owners</span>
           </h2>
           <div className="reviews__google-badge">
-            <span className="reviews__rating-num">4.9</span>
+            <span className="reviews__rating-num">5.0</span>
             <div className="reviews__stars">
               {[...Array(5)].map((_, i) => (
                 <svg key={i} className="reviews__star-icon" width="16" height="16" viewBox="0 0 24 24" fill="currentColor">

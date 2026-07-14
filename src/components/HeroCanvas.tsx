@@ -39,8 +39,8 @@ const HeroCanvas = ({ images }: HeroCanvasProps) => {
     animRef.current.progress = 0
     gsap.to(animRef.current, {
       progress: 1,
-      duration: 1.2,
-      ease: 'power2.inOut',
+      duration: 2.8,
+      ease: 'power3.inOut',
       onUpdate: () => {
         if (materialRef.current) {
           materialRef.current.uniforms.progress.value = animRef.current.progress
@@ -160,26 +160,23 @@ const HeroCanvas = ({ images }: HeroCanvasProps) => {
           discard;
         }
         
-        // Subtle wave distortion during transitions
-        float wave = sin(uv.y * 10.0 + time * 1.5) * 0.015;
-        float wave2 = cos(uv.x * 10.0 - time * 1.5) * 0.015;
-        
-        vec2 distortedUv1 = clamp(vec2(uv.x + progress * wave, uv.y + progress * wave2), 0.0, 1.0);
-        vec2 distortedUv2 = clamp(vec2(uv.x - (1.0 - progress) * wave, uv.y - (1.0 - progress) * wave2), 0.0, 1.0);
-        
         // Sample textures
-        vec4 color1 = texture2D(texture1, distortedUv1);
-        vec4 color2 = texture2D(texture2, distortedUv2);
+        vec4 color1 = texture2D(texture1, uv);
+        vec4 color2 = texture2D(texture2, uv);
+        
+        // Cleanly remove background from color1 individually
+        float bg1 = removeBackground(color1.rgb);
+        color1.a *= (1.0 - bg1);
+        
+        // Cleanly remove background from color2 individually
+        float bg2 = removeBackground(color2.rgb);
+        color2.a *= (1.0 - bg2);
         
         // Blend during transitions
         vec4 result = mix(color1, color2, progress);
         
-        // Apply aggressive background removal
-        float bgMask = removeBackground(result.rgb);
-        result.a *= (1.0 - bgMask);
-        
         // Discard transparent pixels
-        if (result.a < 0.05) {
+        if (result.a < 0.02) {
           discard;
         }
         
@@ -281,7 +278,7 @@ const HeroCanvas = ({ images }: HeroCanvasProps) => {
       <motion.div
         className="hero-canvas-3d-wrapper"
         animate={{ rotateY: flipRotation }}
-        transition={{ duration: 1.2, ease: "easeInOut" }}
+        transition={{ duration: 2.8, ease: [0.16, 1, 0.3, 1] }}
       >
         <motion.div
           className="hero-canvas-motion-wrapper"
