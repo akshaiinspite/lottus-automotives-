@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import { gsap } from 'gsap'
+import emailjs from '@emailjs/browser'
 import './ContactPage.css'
 
 const ContactPage = () => {
@@ -12,6 +13,8 @@ const ContactPage = () => {
     message: '',
   })
   const [submitted, setSubmitted] = useState(false)
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [error, setError] = useState<string | null>(null)
 
   useEffect(() => {
     window.scrollTo(0, 0)
@@ -42,7 +45,33 @@ const ContactPage = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
-    setSubmitted(true)
+    setIsSubmitting(true)
+    setError(null)
+
+    const templateParams = {
+      name: formData.name,
+      email: formData.email,
+      phone: formData.phone || 'Not provided',
+      vehicle: formData.vehicle || 'Not provided',
+      message: formData.message,
+    }
+
+    emailjs.send(
+      'service_mv9lx8n',
+      'template_ii4hf1x',
+      templateParams,
+      'zw2PlOLJ16EqWt9GP'
+    )
+    .then((response) => {
+      console.log('EmailJS Success:', response.status, response.text)
+      setSubmitted(true)
+      setIsSubmitting(false)
+    })
+    .catch((err) => {
+      console.error('EmailJS Error:', err)
+      setError('Something went wrong while sending your message. Please try again or contact us directly at info@gtautohaus.com.')
+      setIsSubmitting(false)
+    })
   }
 
   return (
@@ -155,10 +184,22 @@ const ContactPage = () => {
                         className="contact__input contact__textarea"
                       ></textarea>
                     </div>
-                    <button type="submit" className="btn-primary" id="contact-submit">
-                      Send Message
-                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+                    <button type="submit" className="btn-primary" id="contact-submit" disabled={isSubmitting}>
+                      {isSubmitting ? 'Sending Message...' : 'Send Message'}
+                      {!isSubmitting && (
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+                      )}
                     </button>
+                    {error && (
+                      <div className="contact__error-message">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ flexShrink: 0 }}>
+                          <circle cx="12" cy="12" r="10"/>
+                          <line x1="12" y1="8" x2="12" y2="12"/>
+                          <line x1="12" y1="16" x2="12.01" y2="16"/>
+                        </svg>
+                        <span>{error}</span>
+                      </div>
+                    )}
                   </form>
                 </>
               )}
