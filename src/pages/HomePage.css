@@ -12,7 +12,7 @@
   padding-top: 5rem;
 }
 
-.hero__bg-image {
+.hero__bg-video {
   position: absolute;
   top: 0;
   left: 0;
@@ -20,15 +20,18 @@
   height: 100%;
   z-index: 1;
   pointer-events: none;
+  overflow: hidden; /* Clips the scaled video */
 }
 
-.hero__bg-image img {
+.hero__bg-video video {
   width: 100%;
   height: 100%;
   object-fit: cover;
   object-position: center;
-  opacity: 0.65;
-  filter: brightness(95%) contrast(100%);
+  opacity: 0.85; /* Much more visible */
+  filter: brightness(90%) contrast(105%);
+  transform: scale(1.05); /* Slightly scale up to crop out watermark at the edges */
+  transform-origin: center center;
 }
 
 .hero__overlay {
@@ -37,8 +40,10 @@
   left: 0;
   width: 100%;
   height: 100%;
-  background: linear-gradient(90deg, rgba(10, 10, 10, 0.88) 0%, rgba(10, 10, 10, 0.55) 45%, rgba(10, 10, 10, 0.25) 100%),
-              linear-gradient(180deg, rgba(10, 10, 10, 0.3) 0%, transparent 45%, rgba(10, 10, 10, 0.8) 100%);
+  /* Softened the overlay gradients to make the video much more visible, keeping a subtle dark layer on the left for text readability, and adding a solid bottom-right dark shade to mask the watermark */
+  background: linear-gradient(90deg, rgba(10, 10, 10, 0.7) 0%, rgba(10, 10, 10, 0.4) 45%, rgba(10, 10, 10, 0.1) 100%),
+              linear-gradient(180deg, rgba(10, 10, 10, 0.25) 0%, transparent 45%, rgba(10, 10, 10, 0.8) 100%),
+              radial-gradient(circle at bottom right, rgba(10, 10, 10, 0.95) 0%, transparent 35%);
   z-index: 2;
   pointer-events: none;
 }
@@ -52,7 +57,7 @@
 
 .hero__grid {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1.2fr 0.8fr; /* Keep it aligned with left dominance */
   align-items: center;
   gap: 2rem;
   width: 100%;
@@ -63,11 +68,13 @@
   flex-direction: column;
   align-items: flex-start;
   text-align: left;
+  max-width: 680px;
 }
 
 .hero__label {
   margin-bottom: var(--space-md);
   justify-content: flex-start;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.6);
 }
 
 .hero__title {
@@ -76,12 +83,16 @@
   margin-bottom: var(--space-md);
   letter-spacing: -0.5px;
   color: var(--clr-white);
+  /* Added professional shadow to make the text pop over the bright background video */
+  text-shadow: 0 4px 12px rgba(0, 0, 0, 0.9), 0 2px 4px rgba(0, 0, 0, 0.7);
 }
 
 .hero__description {
   color: var(--clr-gray-light);
   margin-bottom: var(--space-lg);
   max-width: 600px;
+  /* Added text shadow for legibility */
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.85);
 }
 
 .hero__cta-group {

@@ -2,7 +2,6 @@ import { useEffect, useRef } from 'react'
 import { Link } from 'react-router-dom'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
-import HeroCanvas from '../components/HeroCanvas'
 import './HomePage.css'
 
 gsap.registerPlugin(ScrollTrigger)
@@ -17,7 +16,6 @@ const HeroSection = () => {
     const ctx = gsap.context(() => {
       const tl = gsap.timeline({ defaults: { ease: 'power3.out' } })
       tl.fromTo('.hero__text-col > *', { y: 30, opacity: 0 }, { y: 0, opacity: 1, duration: 0.8, stagger: 0.15, delay: 0.3 })
-        .fromTo('.hero__image-col', { x: 50, opacity: 0 }, { x: 0, opacity: 1, duration: 1 }, '-=0.6')
         .fromTo('.hero__scroll-indicator', { opacity: 0 }, { opacity: 1, duration: 1 }, '-=0.3')
     }, heroRef)
     return () => ctx.revert()
@@ -25,9 +23,15 @@ const HeroSection = () => {
 
   return (
     <section className="hero" ref={heroRef} id="hero-section" aria-label="Hero banner – Premium car service Kochi">
-      {/* Background Image and Overlay */}
-      <div className="hero__bg-image" aria-hidden="true">
-        <img src="/WhatsApp Image 2026-07-12 at 09.42.33.jpeg" alt="GT Autohaus premium car showroom building" loading="eager" />
+      {/* Background Video and Overlay */}
+      <div className="hero__bg-video" aria-hidden="true">
+        <video 
+          autoPlay 
+          muted 
+          loop 
+          playsInline 
+          src="/Yellow_BMW_scroll_animation_202607151556.mp4" 
+        />
       </div>
       <div className="hero__overlay" aria-hidden="true"></div>
 
@@ -54,14 +58,6 @@ const HeroSection = () => {
                 Book a Consultation
               </Link>
             </div>
-          </div>
-          <div className="hero__image-col">
-            <HeroCanvas
-              images={[
-                '/hero_car_display_2.png',
-                '/hero_car_display_3.png'
-              ]}
-            />
           </div>
         </div>
       </div>
