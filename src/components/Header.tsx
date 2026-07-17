@@ -43,7 +43,7 @@ const Header = () => {
       <nav className="header__nav container-wide" aria-label="Main navigation">
         <Link to="/" className="header__logo" aria-label="GT Autohaus – Home">
           <img
-            src="/WhatsApp Image 2026-07-16 at 09.49.14.jpeg"
+            src="/WhatsApp_Image_2026-07-16_at_09.49.14-removebg-preview.png"
             alt="GT Autohaus logo – Premium Car Service Kochi"
             className="header__logo-img"
             width="280"

@@ -14,7 +14,7 @@ const Footer = () => {
           <div className="footer__brand">
             <Link to="/" aria-label="GT Autohaus Home">
               <img
-                src="/WhatsApp Image 2026-07-16 at 09.49.14.jpeg"
+                src="/WhatsApp_Image_2026-07-16_at_09.49.14-removebg-preview.png"
                 alt="GT Autohaus logo – Luxury Car Service Centre Kochi"
                 className="footer__logo"
                 width="330"
