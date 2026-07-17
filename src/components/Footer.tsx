@@ -14,7 +14,7 @@ const Footer = () => {
           <div className="footer__brand">
             <Link to="/" aria-label="GT Autohaus Home">
               <img
-                src="/logo (2).png"
+                src="/WhatsApp Image 2026-07-16 at 09.49.14.jpeg"
                 alt="GT Autohaus logo – Luxury Car Service Centre Kochi"
                 className="footer__logo"
                 width="330"
@@ -53,10 +53,13 @@ const Footer = () => {
           <div className="footer__col">
             <h3 className="footer__heading">Get in Touch</h3>
             <address className="footer__address">
-              <p>Kochi, Kerala, India</p>
+              <p style={{ lineHeight: '1.5', marginBottom: '0.5rem' }}>
+                near Holiday Inn Hotel, Chakkaraparambu,<br />
+                Vennala, Kochi, Ernakulam, Kerala 682028
+              </p>
               <p>
-                <a href="mailto:info@gtautohaus.com" className="footer__link">
-                  info@gtautohaus.com
+                <a href="mailto:gtautohaus.in@gmail.com" className="footer__link">
+                  gtautohaus.in@gmail.com
                 </a>
               </p>
             </address>

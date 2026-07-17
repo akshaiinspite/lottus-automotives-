@@ -69,7 +69,7 @@ const ContactPage = () => {
     })
     .catch((err) => {
       console.error('EmailJS Error:', err)
-      setError('Something went wrong while sending your message. Please try again or contact us directly at info@gtautohaus.com.')
+      setError('Something went wrong while sending your message. Please try again or contact us directly at gtautohaus.in@gmail.com.')
       setIsSubmitting(false)
     })
   }
@@ -215,7 +215,11 @@ const ContactPage = () => {
                   </svg>
                 </div>
                 <h3 className="contact__info-title">Location</h3>
-                <p className="contact__info-text">Kochi, Kerala, India</p>
+                <p className="contact__info-text">
+                  GT Autohaus, near Holiday Inn Hotel,<br />
+                  Chakkaraparambu, Vennala,<br />
+                  Kochi, Ernakulam, Kerala 682028
+                </p>
               </div>
               <div className="contact__info-item glass-card">
                 <div className="contact__info-icon">
@@ -226,7 +230,7 @@ const ContactPage = () => {
                 </div>
                 <h3 className="contact__info-title">Email</h3>
                 <p className="contact__info-text">
-                  <a href="mailto:info@gtautohaus.com">info@gtautohaus.com</a>
+                  <a href="mailto:gtautohaus.in@gmail.com">gtautohaus.in@gmail.com</a>
                 </p>
               </div>
               <div className="contact__info-item glass-card">
@@ -240,6 +244,25 @@ const ContactPage = () => {
                 <p className="contact__info-text">Mon – Sat: 9:00 AM – 6:00 PM</p>
               </div>
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Map Section */}
+      <section className="contact-map" id="location-map-section">
+        <div className="container">
+          <div className="contact-map__wrapper glass-card">
+            <iframe
+              src="https://maps.google.com/maps?q=GT%20Autohaus,%20near%20Holiday%20Inn%20Hotel,%20Chakkaraparambu,%20Vennala,%20Kochi,%20Kerala%20682028&t=&z=15&ie=UTF8&iwloc=&output=embed"
+              width="100%"
+              height="450"
+              style={{ border: 0 }}
+              allowFullScreen={true}
+              loading="lazy"
+              referrerPolicy="no-referrer-when-downgrade"
+              title="GT Autohaus Location Map"
+              className="contact-map__iframe"
+            ></iframe>
           </div>
         </div>
       </section>

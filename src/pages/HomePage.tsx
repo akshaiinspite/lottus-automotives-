@@ -40,14 +40,15 @@ const HeroSection = () => {
         <div className="hero__grid">
           <div className="hero__text-col">
             <span className="hero__label section-label">GT Autohaus</span>
-            <h1 className="hero__title" style={{ fontSize: 'clamp(2.2rem, 4.5vw, 3.5rem)', lineHeight: '1.15' }}>
-              Drive with Confidence.<br />
-              <span className="text-orange">Service with Excellence.</span>
+            <h1 className="hero__title" style={{ fontSize: 'clamp(1.8rem, 3.8vw, 2.8rem)', lineHeight: '1.15', marginBottom: '1.5rem' }}>
+              Luxury Car Repair Kerala<br />
+              <span className="text-orange" style={{ fontSize: '0.7em' }}>Premium Luxury & Exotic Car Service Centre</span>
             </h1>
-            <p className="hero__description" style={{ fontSize: '0.98rem', lineHeight: '1.75' }}>
-              Experience complete automotive care in Kochi, from routine maintenance to advanced diagnostics
-              and luxury vehicle repairs. Our skilled technicians, state-of-the-art equipment, and commitment
-              to quality ensure that every journey begins with a vehicle you can trust.
+            <p className="hero__description" style={{ fontSize: '0.95rem', lineHeight: '1.75', marginBottom: '1rem' }}>
+              GT Autohaus is a trusted Luxury Car Service Centre specializing in premium European, luxury, sports, and exotic vehicles across Kerala. Our certified technicians provide dealership-quality diagnostics, maintenance, engine repairs, transmission services, electrical repairs, performance upgrades, detailing, and preventive maintenance using advanced equipment and genuine OEM parts.
+            </p>
+            <p className="hero__description" style={{ fontSize: '0.95rem', lineHeight: '1.75', marginBottom: '2.5rem' }}>
+              Whether you own a BMW, Porsche, Audi, Mercedes-Benz, MINI, Land Rover, Jaguar, Volvo, Bentley, Ferrari, Lamborghini, Maserati, Rolls-Royce, or any other luxury automobile, GT Autohaus delivers precision workmanship, transparent pricing, and uncompromising quality.
             </p>
             <div className="hero__cta-group">
               <Link to="/services" className="btn-primary" id="hero-cta-services">
@@ -125,13 +126,16 @@ const AboutSection = () => {
           <div className="about__text">
             <span className="section-label">About Us</span>
             <h2 className="section-heading" id="about-heading">
-              Full-Service Automotive Excellence in <span className="text-orange">Kochi</span>
+              Kerala's Trusted <span className="text-orange">Luxury Car Repair Specialists</span>
             </h2>
+            <p className="section-subtext" style={{ marginBottom: '1rem' }}>
+              GT Autohaus is one of the leading destinations for Luxury Car Repair Kerala, offering complete automotive care for premium and high-performance vehicles. Our workshop combines dealership-level diagnostic technology with factory-trained expertise to ensure every vehicle receives the highest standard of care.
+            </p>
+            <p className="section-subtext" style={{ marginBottom: '1rem' }}>
+              Our mission is simple—to provide reliable, affordable, and professional luxury vehicle servicing without the excessive costs of authorized dealerships.
+            </p>
             <p className="section-subtext">
-              We are a full-service automotive center dedicated to keeping your vehicle safe, reliable,
-              and performing at its peak. By combining technical expertise, genuine parts, and transparent
-              service, we deliver repairs and maintenance that exceed expectations. Whether you drive a
-              family car or a high-end luxury vehicle, your satisfaction is our priority.
+              We understand that luxury vehicles require specialized attention. Every service is performed according to manufacturer standards using OEM-quality parts and advanced diagnostic systems.
             </p>
           </div>
         </div>
@@ -143,7 +147,7 @@ const AboutSection = () => {
 /* ===== WHY CHOOSE US ===== */
 const whyChooseData = [
   {
-    image: '/why/why_tech.png',
+    image: '/WhatsApp Image 2026-07-14 at 15.59.01.jpeg',
     icon: (
       <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
         <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
@@ -154,7 +158,7 @@ const whyChooseData = [
     desc: 'Our team comprises industry-certified professionals with years of hands-on expertise in servicing both everyday and high-performance vehicles.',
   },
   {
-    image: '/why/why_diag.png',
+    image: '/WhatsApp Image 2026-07-14 at 15.59.01 (1).jpeg',
     icon: (
       <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
         <rect x="2" y="3" width="20" height="14" rx="2"/>
@@ -179,7 +183,7 @@ const whyChooseData = [
     desc: "We use only genuine OEM parts and premium materials to preserve your vehicle's integrity, performance, and warranty.",
   },
   {
-    image: '/why/why_comm.png',
+    image: '/WhatsApp Image 2026-07-14 at 15.59.01 (2).jpeg',
     icon: (
       <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
         <circle cx="12" cy="12" r="10"/>
@@ -202,7 +206,7 @@ const whyChooseData = [
     desc: 'From routine family car maintenance to complex exotic car service, we have the knowledge and tools to handle every marque with care.',
   },
   {
-    image: '/why/why_warranty.png',
+    image: '/WhatsApp Image 2026-07-14 at 15.59.01 (3).jpeg',
     icon: (
       <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
         <circle cx="12" cy="8" r="7"/>
@@ -650,7 +654,7 @@ const StatsSection = () => {
         <div className="stats-counter__banner glass-card">
           <div className="stats-counter__item">
             <div className="stats-counter__item-inner">
-              <span className="stats-counter__number" data-target="15" data-suffix="+">0+</span>
+              <span className="stats-counter__number" data-target="20" data-suffix="+">0+</span>
               <span className="stats-counter__label">Years Experience</span>
             </div>
           </div>

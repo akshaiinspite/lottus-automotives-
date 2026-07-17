@@ -284,3 +284,23 @@
   gap: 0.5rem;
 }
 
+/* ===== MAP SECTION ===== */
+.contact-map {
+  background: var(--clr-dark);
+  padding: 0 0 var(--space-3xl) 0;
+}
+
+.contact-map__wrapper {
+  padding: 0.5rem;
+  overflow: hidden;
+  border-radius: var(--radius-md);
+}
+
+.contact-map__iframe {
+  display: block;
+  border-radius: calc(var(--radius-md) - 4px);
+  filter: grayscale(1) invert(0.9) contrast(1.2);
+  width: 100%;
+  height: 450px;
+}
+

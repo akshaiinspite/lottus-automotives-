@@ -1263,32 +1263,40 @@ export const HeroScrollSequence = () => {
               GT Autohaus
             </span>
             <h1 style={{
-              fontSize: 'clamp(2.1rem, 4.8vw, 3.6rem)',
+              fontSize: 'clamp(1.6rem, 3.6vw, 2.6rem)',
               lineHeight: '1.15',
               fontWeight: 800,
               margin: '0 0 20px 0',
               textTransform: 'uppercase',
               letterSpacing: '-0.5px'
             }}>
-              Drive with Confidence.<br />
+              Luxury Car Repair Kerala<br />
               <span style={{
                 background: 'linear-gradient(90deg, #EE7723 0%, #ff9d5c 100%)',
                 WebkitBackgroundClip: 'text',
-                WebkitTextFillColor: 'transparent'
+                WebkitTextFillColor: 'transparent',
+                fontSize: '0.7em'
               }}>
-                Service with Excellence.
+                Premium Luxury & Exotic Car Service Centre
               </span>
             </h1>
             <p style={{
-              fontSize: '15px',
-              lineHeight: '1.75',
+              fontSize: '14px',
+              lineHeight: '1.7',
               color: 'rgba(255,255,255,0.72)',
-              marginBottom: '35px',
+              marginBottom: '12px',
               fontWeight: 400
             }}>
-              Experience complete automotive care in Kochi, from routine maintenance to advanced diagnostics
-              and luxury vehicle repairs. Our skilled technicians, state-of-the-art equipment, and commitment
-              to quality ensure that every journey begins with a vehicle you can trust.
+              GT Autohaus is a trusted Luxury Car Service Centre specializing in premium European, luxury, sports, and exotic vehicles across Kerala. Our certified technicians provide dealership-quality diagnostics, maintenance, engine repairs, transmission services, electrical repairs, performance upgrades, detailing, and preventive maintenance using advanced equipment and genuine OEM parts.
+            </p>
+            <p style={{
+              fontSize: '14px',
+              lineHeight: '1.7',
+              color: 'rgba(255,255,255,0.72)',
+              marginBottom: '25px',
+              fontWeight: 400
+            }}>
+              Whether you own a BMW, Porsche, Audi, Mercedes-Benz, MINI, Land Rover, Jaguar, Volvo, Bentley, Ferrari, Lamborghini, Maserati, Rolls-Royce, or any other luxury automobile, GT Autohaus delivers precision workmanship, transparent pricing, and uncompromising quality.
             </p>
             <div style={{
               display: 'flex',
