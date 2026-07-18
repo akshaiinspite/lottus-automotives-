@@ -9,6 +9,7 @@ gsap.registerPlugin(ScrollTrigger)
 /* ===== HERO SECTION ===== */
 const HeroSection = () => {
   const heroRef = useRef<HTMLElement>(null)
+  const videoRef = useRef<HTMLVideoElement>(null)
 
   // GSAP entrance
   useEffect(() => {
@@ -21,17 +22,56 @@ const HeroSection = () => {
     return () => ctx.revert()
   }, [])
 
+  // Safari/iOS & Low Power Mode autoplay fix
+  useEffect(() => {
+    const video = videoRef.current
+    if (!video) return
+
+    // Explicitly set muted properties before playing (essential for React & iOS Safari)
+    video.defaultMuted = true
+    video.muted = true
+
+    const attemptPlay = () => {
+      video.play().then(() => {
+        // Successfully playing, clean up fallback interaction listeners
+        removeInteractionListeners()
+      }).catch((err) => {
+        console.log("Autoplay blocked, waiting for user interaction:", err)
+      })
+    }
+
+    const removeInteractionListeners = () => {
+      document.removeEventListener('touchstart', attemptPlay)
+      document.removeEventListener('click', attemptPlay)
+    }
+
+    // Try playing immediately
+    attemptPlay()
+
+    // Add fallback listeners for user interaction to bypass Low Power Mode/Safari restrictions
+    document.addEventListener('touchstart', attemptPlay, { passive: true })
+    document.addEventListener('click', attemptPlay, { passive: true })
+
+    return () => {
+      removeInteractionListeners()
+    }
+  }, [])
+
   return (
     <section className="hero" ref={heroRef} id="hero-section" aria-label="Hero banner – Premium car service Kochi">
       {/* Background Video and Overlay */}
       <div className="hero__bg-video" aria-hidden="true">
         <video 
+          ref={videoRef}
           autoPlay 
           muted 
           loop 
           playsInline 
-          src="/Yellow_BMW_scroll_animation_202607151556.mp4" 
-        />
+          preload="auto"
+          style={{ pointerEvents: 'none' }}
+        >
+          <source src="/Yellow_BMW_scroll_animation_202607151556.mp4" type="video/mp4" />
+        </video>
       </div>
       <div className="hero__overlay" aria-hidden="true"></div>
 
@@ -661,7 +701,7 @@ const StatsSection = () => {
           <div className="stats-counter__divider" aria-hidden="true" />
           <div className="stats-counter__item">
             <div className="stats-counter__item-inner">
-              <span className="stats-counter__number" data-target="5000" data-suffix="+">0+</span>
+              <span className="stats-counter__number" data-target="25" data-suffix="k+">0k+</span>
               <span className="stats-counter__label">Vehicles Serviced</span>
             </div>
           </div>
