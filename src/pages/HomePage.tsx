@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
@@ -10,6 +10,7 @@ gsap.registerPlugin(ScrollTrigger)
 const HeroSection = () => {
   const heroRef = useRef<HTMLElement>(null)
   const videoRef = useRef<HTMLVideoElement>(null)
+  const [videoPlaying, setVideoPlaying] = useState(false)
 
   // GSAP entrance
   useEffect(() => {
@@ -33,6 +34,7 @@ const HeroSection = () => {
 
     const attemptPlay = () => {
       video.play().then(() => {
+        setVideoPlaying(true)
         // Successfully playing, clean up fallback interaction listeners
         removeInteractionListeners()
       }).catch((err) => {
@@ -68,7 +70,12 @@ const HeroSection = () => {
           loop 
           playsInline 
           preload="auto"
-          style={{ pointerEvents: 'none' }}
+          onPlaying={() => setVideoPlaying(true)}
+          style={{ 
+            pointerEvents: 'none',
+            opacity: videoPlaying ? 0.85 : 0,
+            transition: 'opacity 0.8s ease'
+          }}
         >
           <source src="/Yellow_BMW_scroll_animation_202607151556.mp4" type="video/mp4" />
         </video>
