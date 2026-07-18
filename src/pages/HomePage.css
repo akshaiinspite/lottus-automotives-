@@ -21,7 +21,6 @@
   z-index: 1;
   pointer-events: none;
   overflow: hidden; /* Clips the scaled video */
-  background: #0a0a0a url('/hero_car_cinematic.png') center/cover no-repeat;
 }
 
 .hero__bg-video video {
